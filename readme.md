@@ -18,13 +18,6 @@
     * Users will be able to create gatherings, which others may join into. These gatherings will distribute users around an area, allowing the 3D audio experience to work seamlessly.
 
 
-## Tech Choices
-
-Campfire uses Elm for the front-end UI, and supports the possibility of using any other language/framework for the front-end mechanics.
-The only requirement is that the platform supports rendering HTML via Javascript interop.
-Easily this includes web browsers, ElectronJS, WebView, and others.
-
-
 ## Target Platforms
 
 In order of priority, here are the platforms that we are targeting:
@@ -37,6 +30,13 @@ In order of priority, here are the platforms that we are targeting:
     1. Windows
     2. MacOS
     3. Linux
+
+
+## Tech Choices
+
+Campfire uses Elm for the front-end UI, and supports the possibility of using any other language/framework for the front-end mechanics.
+The only requirement is that the platform supports rendering HTML via Javascript interop.
+Easily this includes web browsers, ElectronJS, WebView, and others.
 
 
 ## Fun Facts
