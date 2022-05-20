@@ -1,0 +1,32 @@
+{
+  "name": "campfire-ui-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist",
+    "dev": "webpack-dev-server --hot --config webpack/dev.js --progress",
+    "build": "npm run clean && webpack --config webpack/prod.js --progress --bail",
+    "serve": "cd dist && python -m http.server 3002"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.34",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "elm-hot-webpack-loader": "^1.1.8",
+    "elm-webpack-loader": "^7.0.1",
+    "file-loader": "^6.2.0",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^9.3.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0",
+    "webpack-merge": "^5.8.0"
+  }
+}
