@@ -1,15 +1,15 @@
-module PortMsgIncoming exposing (..)
+module PortMsgIn exposing (..)
 
 import Json.Decode as JD
 import Json.Encode as JE
 
 
-type PortMsgIncoming
+type PortMsgIn
     = Invalid String
     | Message String
 
 
-decodePortValue : JE.Value -> PortMsgIncoming
+decodePortValue : JE.Value -> PortMsgIn
 decodePortValue value =
     case JD.decodeValue (portValueDecoder value) value of
         Ok msg ->
@@ -19,7 +19,7 @@ decodePortValue value =
             Invalid <| JD.errorToString error
 
 
-portValueDecoder : JE.Value -> JD.Decoder PortMsgIncoming
+portValueDecoder : JE.Value -> JD.Decoder PortMsgIn
 portValueDecoder value =
     case JD.decodeValue (JD.field "type" JD.string) value of
         Ok messageType ->
@@ -29,7 +29,7 @@ portValueDecoder value =
             JD.map Invalid (JD.succeed <| JD.errorToString error)
 
 
-portMessageDecoder : String -> JD.Decoder PortMsgIncoming
+portMessageDecoder : String -> JD.Decoder PortMsgIn
 portMessageDecoder messageType =
     case messageType of
         "Message" ->

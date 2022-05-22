@@ -7,8 +7,8 @@ import Element.Border as Border
 import Element.Events as E
 import Html.Attributes as HA
 import Json.Encode as JE
-import PortMsgIncoming exposing (decodePortValue)
-import PortMsgOutgoing exposing (encodePortMessage)
+import PortMsgIn exposing (decodePortValue)
+import PortMsgOut exposing (encodePortMessage)
 import Util exposing (ifThenElse)
 
 
@@ -79,27 +79,27 @@ update msg model =
 
         ToggleMute ->
             ( { model | muteStatus = not model.muteStatus }
-            , sendMessage <| encodePortMessage <| PortMsgOutgoing.SetMuteState <| not model.muteStatus
+            , sendMessage <| encodePortMessage <| PortMsgOut.SetMuteState <| not model.muteStatus
             )
 
         ToggleRecording ->
             ( { model | recordingStatus = not model.recordingStatus }
-            , sendMessage <| encodePortMessage <| PortMsgOutgoing.SetRecordingState <| not model.recordingStatus
+            , sendMessage <| encodePortMessage <| PortMsgOut.SetRecordingState <| not model.recordingStatus
             )
 
         TogglePlaying ->
             ( { model | playingStatus = not model.playingStatus }
-            , sendMessage <| encodePortMessage <| PortMsgOutgoing.SetPlayingState <| not model.playingStatus
+            , sendMessage <| encodePortMessage <| PortMsgOut.SetPlayingState <| not model.playingStatus
             )
 
         ReceiveMessage value ->
             case decodePortValue value of
-                PortMsgIncoming.Message message ->
+                PortMsgIn.Message message ->
                     ( { model | message = message }
                     , Cmd.none
                     )
 
-                PortMsgIncoming.Invalid message ->
+                PortMsgIn.Invalid message ->
                     ( { model | message = message }
                     , Cmd.none
                     )
@@ -125,9 +125,10 @@ myWindow : Model -> Element Msg
 myWindow model =
     column
         [ spacing 10 ]
-        [ button
+        [ text <| "Last Message: " ++ model.message
+        , button
             []
-            (ifThenElse model.muteStatus "Mute" "Unmute")
+            (ifThenElse model.muteStatus "Unmute" "Mute")
             ToggleMute
         , button
             [ Element.htmlAttribute <| HA.disabled model.playingStatus ]

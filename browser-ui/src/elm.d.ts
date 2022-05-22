@@ -3,16 +3,16 @@
 */
 declare module "*.elm" {
 
-    type ElmFlags = {
+    export type ElmFlags = {
 
     };
     
-    type MsgToElm = {
+    export type MsgToElm = {
         type: 'Message';
         message: string;
     };
     
-    type MsgFromElm = {
+    export type MsgFromElm = {
         type: 'SetMuteState';
         state: boolean;
     } | {
@@ -23,7 +23,7 @@ declare module "*.elm" {
         state: boolean;
     };
     
-    type ElmApp = {
+    export type ElmApp = {
         ports: {
             sendMessage: {
                 subscribe: (callback: (message: MsgFromElm) => void) => void;
@@ -38,7 +38,7 @@ declare module "*.elm" {
         Main: {
             init: (options: {
                 flags: ElmFlags;
-                node?: HTMLElement;
+                node: HTMLElement;
             }) => ElmApp;
         }
     };

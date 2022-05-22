@@ -1,15 +1,15 @@
-module PortMsgOutgoing exposing (..)
+module PortMsgOut exposing (..)
 
 import Json.Encode as JE
 
 
-type PortMsgOutgoing
+type PortMsgOut
     = SetMuteState Bool
     | SetRecordingState Bool
     | SetPlayingState Bool
 
 
-encodePortMessage : PortMsgOutgoing -> JE.Value
+encodePortMessage : PortMsgOut -> JE.Value
 encodePortMessage portMessage =
     case portMessage of
         SetMuteState state ->
