@@ -5,7 +5,6 @@ export const messageHandler: MsgHandler = async (msg, state, send) => {
         switch (msg.type) {
             case 'SetMuteState':
                 state.microphone.setMuteState(msg.state);
-                send({type: 'Message', message: `Successfully set mute state to ${msg.state}`});
                 break;
             case 'SetPlayingState':
                 if(state.recordedAudio === undefined) {
@@ -26,7 +25,10 @@ export const messageHandler: MsgHandler = async (msg, state, send) => {
                     state.recordedAudio = new Audio(url);
                 }
                 break;
+            case 'SetUsername':
+                break;
             default:
+                send({type: 'Message', message: 'JS message handler encountered an unsupported message type'});
                 console.error('message type is not supported:', msg);
                 break;
         }

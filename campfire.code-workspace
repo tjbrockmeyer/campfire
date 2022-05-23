@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "browser-ui"
+		},
+		{
+			"path": "signal-server"
 		}
 	],
 	"settings": {}

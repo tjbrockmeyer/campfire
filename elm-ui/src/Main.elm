@@ -5,6 +5,7 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Events as E
+import Element.Input as Input
 import Html.Attributes as HA
 import Json.Encode as JE
 import PortMsgIn exposing (decodePortValue)
@@ -16,7 +17,7 @@ import Util exposing (ifThenElse)
 -- MAIN
 
 
-main : Program {} Model Msg
+main : Program Flags Model Msg
 main =
     Browser.document
         { init = init
@@ -41,16 +42,24 @@ port receiveMessage : (JE.Value -> msg) -> Sub msg
 
 
 type alias Model =
-    { muteStatus : Bool
+    { username : String
+    , muteStatus : Bool
     , recordingStatus : Bool
     , playingStatus : Bool
     , message : String
     }
 
 
-init : flags -> ( Model, Cmd Msg )
-init _ =
-    ( { muteStatus = False
+type alias Flags =
+    { username : String
+    , muteStatus : Bool
+    }
+
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( { username = flags.username
+      , muteStatus = flags.muteStatus
       , recordingStatus = False
       , playingStatus = False
       , message = ""
@@ -68,6 +77,7 @@ type Msg
     | ToggleMute
     | ToggleRecording
     | TogglePlaying
+    | SetUsername String
     | ReceiveMessage JE.Value
 
 
@@ -90,6 +100,11 @@ update msg model =
         TogglePlaying ->
             ( { model | playingStatus = not model.playingStatus }
             , sendMessage <| encodePortMessage <| PortMsgOut.SetPlayingState <| not model.playingStatus
+            )
+
+        SetUsername username ->
+            ( { model | username = username }
+            , sendMessage <| encodePortMessage <| PortMsgOut.SetUsername username
             )
 
         ReceiveMessage value ->
@@ -124,8 +139,20 @@ view model =
 myWindow : Model -> Element Msg
 myWindow model =
     column
-        [ spacing 10 ]
-        [ text <| "Last Message: " ++ model.message
+        [ spacing 10
+        , padding 10
+        ]
+        [ el [] (text <| "Last Message: " ++ model.message)
+        , row
+            [ spacing 10 ]
+            [ el [] (text "Username:")
+            , Input.text []
+                { onChange = SetUsername
+                , label = Input.labelAbove [] (text "Username")
+                , text = model.username
+                , placeholder = Nothing
+                }
+            ]
         , button
             []
             (ifThenElse model.muteStatus "Unmute" "Mute")
@@ -146,7 +173,6 @@ button attributes buttonText msg =
     column
         (List.concat
             [ [ E.onClick msg
-              , padding 10
               , Background.color <| rgb 50 200 50
               , Element.htmlAttribute <| HA.style "cursor" "pointer"
               , Border.rounded 4

@@ -15,7 +15,6 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.34",
-    "@types/webrtc": "^0.0.32",
     "browser-sync-webpack-plugin": "^2.3.0",
     "copy-webpack-plugin": "^11.0.0",
     "elm-hot-webpack-loader": "^1.1.8",
@@ -31,6 +30,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "peerjs": "^1.4.4"
+    "peerjs": "^1.4.4",
+    "webrtc-adapter": "^8.1.1"
   }
 }

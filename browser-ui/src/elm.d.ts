@@ -21,6 +21,9 @@ declare module "*.elm" {
     } | {
         type: 'SetPlayingState';
         state: boolean;
+    } | {
+        type: 'SetUsername';
+        username: string;
     };
     
     export type ElmApp = {
